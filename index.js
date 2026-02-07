@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const app = express()
 
 // Setting up cors
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:5173", "https://immix.netlify.app"];
 
 const corsOptions = {
     credentials: true,
