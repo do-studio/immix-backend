@@ -98,11 +98,7 @@ const loginUser = async (req, res) => {
       // create token with role = technician
       const token = createToken(ft._id, "technician");
 
-      res.cookie("user_token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax"
-      });
+      res.cookie("user_token", token, cookieConfig);
 
       return res.status(200).json({
         success: true,
@@ -122,11 +118,7 @@ const loginUser = async (req, res) => {
 
       const token = createToken(user._id, "admin");
 
-      res.cookie("user_token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax"
-      });
+      res.cookie("user_token", token, cookieConfig);
 
       return res.status(200).json({
         success: true,
@@ -148,11 +140,7 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  res.clearCookie("user_token", {
-    sameSite: "none",
-    secure: true,
-    httpOnly: true,
-  });
+  res.clearCookie("user_token", cookieConfig);
 
   res.status(200).json({ msg: "Logged out Successfully" });
 };
