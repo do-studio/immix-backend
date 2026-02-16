@@ -10,11 +10,12 @@ const createToken = (_id) => {
 };
 
 const cookieConfig = {
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // False in dev, True in prod
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Lax is better for local dev
   maxAge: 1000 * 60 * 60 * 24, // 1 day
 };
+
 
 // const cookieConfig = {
 //   httpOnly: true,
