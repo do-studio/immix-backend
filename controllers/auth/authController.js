@@ -10,11 +10,13 @@ const createToken = (_id) => {
 };
 
 const cookieConfig = {
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  secure: process.env.NODE_ENV === "production",
   httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // Only true in production
+  sameSite: "none", // recommended for CSRF protection
+  // sameSite: "strict", // recommended for CSRF protection
   maxAge: 1000 * 60 * 60 * 24, // 1 day
 };
+
 
 
 // const cookieConfig = {
@@ -82,7 +84,7 @@ const loginUser = async (req, res) => {
 
     // 1️⃣ Technician Login (if technicianId exists)
     if (technicianId) {
-      const ft = await FieldTechnician.findOne({ technicianId }); 
+      const ft = await FieldTechnician.findOne({ technicianId });
 
       if (!ft) {
         return res.status(401).json({ error: "Invalid Technician ID" });
