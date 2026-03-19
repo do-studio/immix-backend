@@ -11,12 +11,11 @@ const createToken = (_id) => {
 
 const cookieConfig = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  // CRITICAL: "lax" allows the cookie to be set across local ports (3000 -> 5000)
-  sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-  path: "/", // CRITICAL: Ensures login and logout point to the exact same cookie 
+  secure: process.env.NODE_ENV === "production", // Must be true when sameSite is "none"
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Changed "strict" to "none"
+  path: "/",
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
 };
-
 
 
 // To get user data on initial page load.
