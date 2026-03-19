@@ -17,6 +17,12 @@ const cookieConfig = {
   maxAge: 1000 * 60 * 60 * 24, // 1 day
 };
 
+const baseCookieConfig = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", 
+  sameSite: "strict", 
+  path: "/", // CRITICAL: explicitly declare the path
+};
 
 // To get user data on initial page load.
 const getUserDataFirst = async (req, res) => {
@@ -129,7 +135,7 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  res.clearCookie("user_token", cookieConfig);
+  res.clearCookie("user_token", baseCookieConfig);
 
   res.status(200).json({ msg: "Logged out Successfully" });
 };
