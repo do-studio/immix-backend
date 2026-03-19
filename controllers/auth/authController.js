@@ -11,18 +11,13 @@ const createToken = (_id) => {
 
 const cookieConfig = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // Only true in production
-  // sameSite: "none", // recommended for CSRF protection
-  sameSite: "strict", // recommended for CSRF protection
-  maxAge: 1000 * 60 * 60 * 24, // 1 day
+  secure: process.env.NODE_ENV === "production",
+  // CRITICAL: "lax" allows the cookie to be set across local ports (3000 -> 5000)
+  sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+  path: "/", // CRITICAL: Ensures login and logout point to the exact same cookie 
 };
 
-const baseCookieConfig = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production", 
-  sameSite: "strict", 
-  path: "/", // CRITICAL: explicitly declare the path
-};
+
 
 // To get user data on initial page load.
 const getUserDataFirst = async (req, res) => {
@@ -135,7 +130,7 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  res.clearCookie("user_token", baseCookieConfig);
+  res.clearCookie("user_token", cookieConfig);
 
   res.status(200).json({ msg: "Logged out Successfully" });
 };
