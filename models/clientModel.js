@@ -25,7 +25,7 @@ const clientSchema = new mongoose.Schema({
   },
 
   // Full Address
-  address: {
+  address: {  
     type: String,
     required: true,
     trim: true

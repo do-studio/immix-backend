@@ -719,8 +719,10 @@ const getClientBillingReport = async (req, res) => {
         // Fetch matching ServiceEntry documents
         const logs = await ServiceEntry.find(query)
             .populate("dataCenterId", "name")
-            .populate("ftId", "name")
+            .populate("ftId", "name standardRate offStandardRate")
             .populate("additionalFTIds", "name")
+            .populate("city", "name")
+            .populate("clientId", "name")
             .lean();
 
         // Fetch ClientPricing documents
