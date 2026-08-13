@@ -840,7 +840,7 @@ const roundToTwo = (num) => {
 
 const getTechnicianPayroll = async (req, res) => {
     try {
-        const { ftId, startDate, endDate } = req.query;
+        const { ftId, startDate, endDate, clientId } = req.query;
 
         // Validation
         if (!ftId || !startDate || !endDate) {
@@ -857,6 +857,10 @@ const getTechnicianPayroll = async (req, res) => {
                 $lte: new Date(endDate + 'T23:59:59.999Z')
             }
         };
+
+        if (clientId) {
+            query.clientId = clientId;
+        }
 
         console.log("query", query);
 
